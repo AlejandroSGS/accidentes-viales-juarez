@@ -19,6 +19,8 @@ Crea las bases `accidentes_viales` y `accidentes_viales_test` en PostgreSQL. Des
 ```powershell
 .venv\Scripts\python -m src.db --reset          # crea el esquema desde cero
 .venv\Scripts\python -m src.limpieza.pipeline   # limpia los datos y los carga (se puede repetir)
+.venv\Scripts\python -m src.analisis.reporte    # genera docs/reporte_analisis.md
+.venv\Scripts\streamlit run src/app/app.py      # abre la aplicación en http://localhost:8501
 ```
 
 ## Documentación

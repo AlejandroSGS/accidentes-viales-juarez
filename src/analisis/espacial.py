@@ -53,6 +53,27 @@ def densidad_kernel(df: pd.DataFrame, ancho_banda_m: float = ANCHO_BANDA_M,
     })
 
 
+def densidad_kernel_latlon(df: pd.DataFrame, ancho_banda_m: float = ANCHO_BANDA_M,
+                           n_celdas: int = 300, margen_m: float = 1500):
+    """KDE evaluado en una malla regular de latitud/longitud (para superponer en mapas web).
+
+    Devuelve (matriz de densidad en incidentes/km² con la fila 0 al norte, [[lat_s, lon_o], [lat_n, lon_e]]).
+    """
+    d = _solo_dentro(df)
+    xy = d[["x_utm", "y_utm"]].to_numpy()
+    w = d["incidentes"].to_numpy(dtype=float)
+    kde = KernelDensity(bandwidth=ancho_banda_m).fit(xy, sample_weight=w)
+    lon0, lat0 = _A_WGS84.transform(*(xy.min(axis=0) - margen_m))
+    lon1, lat1 = _A_WGS84.transform(*(xy.max(axis=0) + margen_m))
+    lats = np.linspace(lat1, lat0, n_celdas)            # de norte a sur (orden de una imagen)
+    lons = np.linspace(lon0, lon1, n_celdas)
+    glon, glat = np.meshgrid(lons, lats)
+    a_utm = Transformer.from_crs(4326, 32613, always_xy=True)
+    gx, gy = a_utm.transform(glon.ravel(), glat.ravel())
+    dens = np.exp(kde.score_samples(np.column_stack([gx, gy]))) * w.sum() * 1e6
+    return dens.reshape(glat.shape), [[lat0, lon0], [lat1, lon1]]
+
+
 def densidad_en_cruceros(df: pd.DataFrame, ancho_banda_m: float = ANCHO_BANDA_M) -> pd.Series:
     """Densidad KDE (incidentes/km²) en la ubicación de cada crucero."""
     d = _solo_dentro(df)
