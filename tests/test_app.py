@@ -24,7 +24,7 @@ def test_app_arranca(app):
     assert not app.exception
     assert app.title[0].value == "Accidentes viales en Ciudad Juárez"
     assert [m.value for m in app.metric][:2] == ["6,423", "2,787"]
-    assert any("No determinan las causas" in i.value for i in app.info)
+    assert any("No determinan las causas" in m.value for m in app.markdown)
 
 
 @pytest.mark.parametrize("pagina", PAGINAS)

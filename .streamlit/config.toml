@@ -1,0 +1,15 @@
+# Tema sobrio: fondo claro, texto casi negro y un solo color de acento (gris azulado)
+[theme]
+base = "light"
+primaryColor = "#2B3A4A"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F3F3F1"
+textColor = "#1C1C1C"
+font = "sans serif"
+baseRadius = "small"
+
+[client]
+toolbarMode = "viewer"
+
+[browser]
+gatherUsageStats = false

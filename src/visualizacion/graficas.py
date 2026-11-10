@@ -5,8 +5,11 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-COLOR_PRINCIPAL = "#1f5f8b"
-COLOR_SECUNDARIO = "#d9822b"
+# Paleta sobria: un acento gris azulado oscuro y un gris medio
+COLOR_PRINCIPAL = "#2B3A4A"
+COLOR_SECUNDARIO = "#9AA3AD"
+COLOR_REFERENCIA = "#B5B5B5"
+ESCALA_SECUENCIAL = ["#F3F3F1", "#C9D0D7", "#8F9CAA", "#56677A", "#2B3A4A"]
 FUENTE = "Fuente: IMIP, cruceros con incidentes viales 2024 (datos del proyecto)."
 
 
@@ -14,11 +17,14 @@ def _estilo(fig: go.Figure, titulo: str, alto: int = 450) -> go.Figure:
     fig.update_layout(
         title={"text": titulo, "x": 0, "xanchor": "left"},
         height=alto, separators=".,", margin={"l": 10, "r": 10, "t": 60, "b": 60},
-        font={"size": 13}, hoverlabel={"font_size": 13},
+        font={"size": 13, "color": "#1C1C1C"}, hoverlabel={"font_size": 13},
+        plot_bgcolor="#FFFFFF", paper_bgcolor="#FFFFFF",
         annotations=[*fig.layout.annotations, go.layout.Annotation(
             text=FUENTE, showarrow=False, xref="paper", yref="paper", x=0, y=-0.18,
             xanchor="left", font={"size": 11, "color": "#666"})],
     )
+    fig.update_xaxes(showline=True, linecolor="#BFBFBF", gridcolor="#ECECEC", zeroline=False)
+    fig.update_yaxes(showline=True, linecolor="#BFBFBF", gridcolor="#ECECEC", zeroline=False)
     return fig
 
 
@@ -50,13 +56,13 @@ def curva_pareto(curva: pd.DataFrame, marcas: tuple = (25, 50, 80)) -> go.Figure
                              line={"color": COLOR_PRINCIPAL, "width": 3},
                              hovertemplate="%{x:.1f} % de los cruceros → %{y:.1f} % de los incidentes<extra></extra>"))
     fig.add_trace(go.Scatter(x=[0, 100], y=[0, 100], mode="lines", name="Reparto igual (referencia)",
-                             line={"color": "#888", "dash": "dash"}, hoverinfo="skip"))
+                             line={"color": COLOR_REFERENCIA, "dash": "dash"}, hoverinfo="skip"))
     xs = curva["pct_cruceros"].to_numpy()
     ys = curva["pct_incidentes"].to_numpy()
     for m in marcas:
         x = float(xs[(ys >= m - 1e-9).argmax()])
         fig.add_trace(go.Scatter(x=[x], y=[m], mode="markers+text", showlegend=False,
-                                 marker={"size": 10, "color": COLOR_SECUNDARIO, "symbol": "diamond"},
+                                 marker={"size": 8, "color": COLOR_PRINCIPAL, "symbol": "square"},
                                  text=[f"{m} % de incidentes en {x:.1f} % de cruceros"], textposition="middle right",
                                  hoverinfo="skip"))
     fig.update_xaxes(title="% de cruceros (acumulado)", range=[0, 100], ticksuffix=" %")
@@ -89,7 +95,7 @@ def evaluacion_k(ev: pd.DataFrame, k_elegido: int) -> go.Figure:
     fila = ev[ev["k"] == k_elegido]
     if len(fila):
         fig.add_trace(go.Scatter(x=fila["k"], y=fila["silueta"], mode="markers", showlegend=False,
-                                 marker={"size": 16, "color": COLOR_SECUNDARIO, "symbol": "star"},
+                                 marker={"size": 14, "color": "#FFFFFF", "symbol": "square-open", "line": {"width": 2, "color": "#1C1C1C"}},
                                  hovertemplate="k elegido<extra></extra>"))
     fig.update_xaxes(title="Número de grupos (k)", dtick=1)
     fig.update_yaxes(title="Silueta (más alto = grupos más separados)")
@@ -99,7 +105,7 @@ def evaluacion_k(ev: pd.DataFrame, k_elegido: int) -> go.Figure:
 
 def mapa_calor_tabla(tabla: pd.DataFrame, titulo: str, eje_x: str, eje_y: str) -> go.Figure:
     """Tabla de doble entrada como mapa de calor, con el número escrito en cada celda."""
-    fig = px.imshow(tabla, text_auto=",", color_continuous_scale="Blues", aspect="auto")
+    fig = px.imshow(tabla, text_auto=",", color_continuous_scale=ESCALA_SECUENCIAL, aspect="auto")
     fig.update_traces(hovertemplate=f"{eje_y}: %{{y}}<br>{eje_x}: %{{x}}<br>Incidentes: %{{z:,}}<extra></extra>")
     fig.update_xaxes(title=eje_x, type="category")
     fig.update_yaxes(title=eje_y, type="category")

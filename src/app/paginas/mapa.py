@@ -20,14 +20,14 @@ banda = c2.slider("Radio de suavizado del KDE (m)", 200, 1500, 500, step=100,
 n_top = c3.slider("Cruceros principales a numerar", 5, 30, 10, step=5)
 
 st.markdown(
-    f"Se muestran **{comun.miles(len(dentro))} cruceros** ({comun.miles(dentro['incidentes'].sum())} incidentes). "
-    f"**No se muestran {comun.miles(len(fuera))} cruceros** ({comun.miles(fuera['incidentes'].sum())} incidentes) "
+    f"Se muestran {comun.miles(len(dentro))} cruceros ({comun.miles(dentro['incidentes'].sum())} incidentes). "
+    f"No se muestran {comun.miles(len(fuera))} cruceros ({comun.miles(fuera['incidentes'].sum())} incidentes) "
     "porque su ubicación cae fuera del límite municipal. Todos los registros tienen coordenadas; la ubicación "
     "corresponde al crucero, no al punto exacto del incidente."
 )
 
 if not capas:
-    st.info("Elige al menos una capa.")
+    st.write("Elige al menos una capa.")
     st.stop()
 
 m = mapas.mapa_base()
@@ -42,16 +42,16 @@ mapas.ajustar_vista(m, dentro)
 folium.LayerControl(collapsed=False).add_to(m)
 st_folium(m, height=620, use_container_width=True, returned_objects=[])
 
-with st.expander("Cómo leer el mapa"):
+with st.expander("Notas sobre el mapa"):
     st.markdown(f"""
-- **Densidad Kernel:** suaviza los incidentes de cada crucero en un radio de unos {banda} m. Los colores más oscuros
-  indican más incidentes por km² **considerando también a los cruceros vecinos** (escala en la esquina superior derecha).
-- **Cruceros:** el tamaño del círculo es proporcional al número de incidentes. Pasa el cursor para ver el detalle.
-- **Cruceros con más incidentes:** el número es la posición en el ranking (1 = el de más incidentes).
+- Densidad Kernel: suaviza los incidentes de cada crucero en un radio de unos {banda} m. Los colores más oscuros
+  indican más incidentes por km² considerando también a los cruceros vecinos (escala en la esquina superior derecha).
+- Cruceros: el tamaño del círculo es proporcional al número de incidentes. Pasa el cursor para ver el detalle.
+- Cruceros con más incidentes: el número es la posición en el ranking (1 = el de más incidentes).
 - Método basado en Anderson (2009). Describe concentración de registros, no causas.
 """)
 
-st.subheader(f"Cruceros numerados en el mapa")
+st.subheader("Cruceros numerados en el mapa")
 rk = de.ranking_cruceros(dentro, n_top)
 st.dataframe(rk[["posicion", "nombre_crucero", "zona", "sector", "incidentes"]], hide_index=True,
              width="stretch", column_config={

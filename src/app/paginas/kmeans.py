@@ -7,15 +7,15 @@ from src.app import comun
 from src.visualizacion import graficas as gr, mapas
 
 comun.encabezado("Zonas K-means",
-                 "Modelo de *machine learning* **no supervisado**: agrupa los cruceros cercanos entre sí, dando más "
+                 "Modelo de *machine learning* no supervisado: agrupa los cruceros cercanos entre sí, dando más "
                  "peso a los que tienen más incidentes (K-means ponderado, Anderson 2009). Sirve para describir zonas "
-                 "de concentración; **no predice** accidentes.")
+                 "de concentración; no predice accidentes.")
 
 df = comun.datos_filtrados()
 dentro = df[~df["fuera_municipio"]]
 max_k = min(12, len(dentro))
 if max_k < 2:
-    st.info("Se necesitan al menos 2 cruceros para formar grupos. Ajusta los filtros.")
+    st.write("Se necesitan al menos 2 cruceros para formar grupos. Ajusta los filtros.")
     st.stop()
 
 k = st.slider("Número de grupos (k)", 2, max_k, min(6, max_k),
@@ -65,6 +65,6 @@ with st.expander("¿Por qué este número de grupos? (evaluación de k = 2 a 12)
         st.dataframe(ev, hide_index=True, column_config={
             "k": "k", "inercia_km2": st.column_config.NumberColumn("Inercia (km² × incidentes)", format="%.0f"),
             "silueta": st.column_config.NumberColumn("Silueta", format="%.3f")})
-    st.markdown("La **silueta** mide qué tan separados quedan los grupos (de −1 a 1). Con los datos completos es "
+    st.markdown("La silueta mide qué tan separados quedan los grupos (de −1 a 1). Con los datos completos es "
                 "mayor con k = 2, pero dos grupos no describen la ciudad; de 3 a 12 cambia poco. El resultado no "
                 "depende del azar: se usa una semilla fija y con otra semilla se obtienen los mismos grupos.")

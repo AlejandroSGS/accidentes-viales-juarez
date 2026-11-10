@@ -10,8 +10,8 @@ from sqlalchemy import text
 from src.analisis import datos, espacial as es
 from src.config import SCHEMA, get_engine
 
-AVISO_CAUSAS = ("**Aviso:** estos resultados muestran **dónde se concentran los registros** de incidentes "
-                "viales de 2024. **No determinan las causas** de los accidentes ni el riesgo de un lugar.")
+AVISO_CAUSAS = ("Nota: estos resultados muestran dónde se concentran los registros de incidentes viales de 2024. "
+                "No determinan las causas de los accidentes ni el riesgo de un lugar.")
 
 
 @st.cache_resource
@@ -67,7 +67,7 @@ def datos_filtrados() -> pd.DataFrame:
     """Cruceros según los filtros compartidos; detiene la página si no hay resultados."""
     df = cruceros(**filtros())
     if df.empty:
-        st.info("Ningún crucero cumple los filtros elegidos. Ajusta los filtros en la barra lateral.")
+        st.write("Ningún crucero cumple los filtros elegidos. Ajusta los filtros en la barra lateral.")
         st.stop()
     return df
 
@@ -87,7 +87,8 @@ def encabezado(titulo: str, subtitulo: str | None = None, aviso: bool = True) ->
         st.markdown(subtitulo)
     st.caption(descripcion_filtros())
     if aviso:
-        st.info(AVISO_CAUSAS, icon="ℹ️")
+        with st.container(border=True):
+            st.markdown(AVISO_CAUSAS)
 
 
 def miles(n) -> str:

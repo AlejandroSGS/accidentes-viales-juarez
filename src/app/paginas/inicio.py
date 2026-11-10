@@ -4,7 +4,7 @@ from src.analisis import descriptiva as de
 from src.app import comun
 
 comun.encabezado("Accidentes viales en Ciudad Juárez",
-                 "Consulta de los **cruceros con incidentes viales registrados en 2024** en Ciudad Juárez, "
+                 "Consulta de los cruceros con incidentes viales registrados en 2024 en Ciudad Juárez, "
                  "Chihuahua, para reconocer dónde se concentran.")
 
 df = comun.datos_filtrados()
@@ -37,10 +37,10 @@ st.dataframe(
     },
 )
 
-st.subheader("Cómo leer esta aplicación")
+st.subheader("Sobre los datos")
 st.markdown("""
-- Cada registro es un **crucero** (cruce de dos calles) con el **número de incidentes viales que tuvo en 2024**.
-- Los datos **no incluyen fecha, hora ni tipo** de incidente; por eso no hay análisis por mes, día u hora (ver *Tiempo y tipos*).
+- Cada registro es un crucero (cruce de dos calles) con el número de incidentes viales que tuvo en 2024.
+- Los datos no incluyen fecha, hora ni tipo de incidente; por eso no hay análisis por mes, día u hora (ver *Tiempo y tipos*).
 - Los filtros de la barra lateral aplican a todas las páginas.
 - En *Calidad y trazabilidad* se explica qué se corrigió en los datos y cuántos registros tienen alguna marca.
 """)

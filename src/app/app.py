@@ -14,7 +14,7 @@ from sqlalchemy.exc import OperationalError, ProgrammingError  # noqa: E402
 
 from src.app import comun  # noqa: E402
 
-st.set_page_config(page_title="Accidentes viales en Ciudad Juárez", page_icon="🚦", layout="wide")
+st.set_page_config(page_title="Accidentes viales en Ciudad Juárez", layout="wide")
 
 
 try:
@@ -47,17 +47,17 @@ with st.sidebar:
 
 paginas = {
     "Resultados": [
-        st.Page("paginas/inicio.py", title="Inicio", icon="🏠", default=True),
-        st.Page("paginas/explorar.py", title="Explorar datos", icon="🔎"),
-        st.Page("paginas/ranking.py", title="Cruceros y zonas", icon="📊"),
-        st.Page("paginas/concentracion.py", title="Concentración", icon="📈"),
-        st.Page("paginas/mapa.py", title="Mapa", icon="🗺️"),
-        st.Page("paginas/kmeans.py", title="Zonas K-means", icon="🧩"),
-        st.Page("paginas/no_disponible.py", title="Tiempo y tipos", icon="⏱️"),
+        st.Page("paginas/inicio.py", title="Inicio", default=True),
+        st.Page("paginas/explorar.py", title="Explorar datos"),
+        st.Page("paginas/ranking.py", title="Cruceros y zonas"),
+        st.Page("paginas/concentracion.py", title="Concentración"),
+        st.Page("paginas/mapa.py", title="Mapa"),
+        st.Page("paginas/kmeans.py", title="Zonas K-means"),
+        st.Page("paginas/no_disponible.py", title="Tiempo y tipos"),
     ],
     "Información": [
-        st.Page("paginas/calidad.py", title="Calidad y trazabilidad", icon="✅"),
-        st.Page("paginas/acerca.py", title="Acerca de", icon="📄"),
+        st.Page("paginas/calidad.py", title="Calidad y trazabilidad"),
+        st.Page("paginas/acerca.py", title="Acerca de"),
     ],
 }
 st.navigation(paginas).run()

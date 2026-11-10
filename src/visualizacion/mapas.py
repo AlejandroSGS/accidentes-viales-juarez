@@ -9,9 +9,11 @@ import numpy as np
 import pandas as pd
 
 CENTRO_JUAREZ = (31.69, -106.42)
-# Paleta Okabe-Ito: distinguible para personas con daltonismo
-PALETA_GRUPOS = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00",
-                 "#F0E442", "#000000", "#999999", "#882255", "#44AA99", "#117733"]
+# Colores apagados y bien separados entre sí; cada grupo lleva además su número en el mapa
+PALETA_GRUPOS = ["#2B3A4A", "#4E79A7", "#59A14F", "#B07AA1", "#9C755F", "#76B7B2",
+                 "#E15759", "#7F7F7F", "#EDC948", "#1B6E5A", "#86BCB6", "#5A4E7A"]
+COLOR_PUNTO = "#2B3A4A"
+ESCALA_DENSIDAD = ["#E9ECEF", "#BAC4CE", "#8496A8", "#4F6378", "#1F3346"]
 
 
 def mapa_base(zoom: int = 11) -> folium.Map:
@@ -43,7 +45,7 @@ def capa_puntos(m: folium.Map, df: pd.DataFrame, nombre: str = "Cruceros") -> fo
     capa = folium.FeatureGroup(name=nombre)
     for _, f in df.sort_values("incidentes").iterrows():
         folium.CircleMarker((f["latitud"], f["longitud"]), radius=_radio(f["incidentes"]),
-                            color="#1f5f8b", weight=1, fill=True, fill_color="#1f5f8b", fill_opacity=0.45,
+                            color=COLOR_PUNTO, weight=1, fill=True, fill_color=COLOR_PUNTO, fill_opacity=0.4,
                             tooltip=_tooltip(f)).add_to(capa)
     capa.add_to(m)
     return m
@@ -51,7 +53,7 @@ def capa_puntos(m: folium.Map, df: pd.DataFrame, nombre: str = "Cruceros") -> fo
 
 def capa_densidad(m: folium.Map, densidad: np.ndarray, limites: list, opacidad: float = 0.7) -> folium.Map:
     """Superpone la malla KDE como imagen, con leyenda en incidentes por km²."""
-    colores = ["#ffffb2", "#fecc5c", "#fd8d3c", "#f03b20", "#bd0026"]
+    colores = ESCALA_DENSIDAD
     vmax = float(np.nanmax(densidad)) or 1.0
     escala = bcm.LinearColormap(colores, vmin=0, vmax=vmax, caption="Densidad Kernel (incidentes por km²)")
     paradas = np.linspace(0, vmax, len(colores))
@@ -71,9 +73,9 @@ def capa_ranking(m: folium.Map, ranking: pd.DataFrame) -> folium.Map:
     capa = folium.FeatureGroup(name="Cruceros con más incidentes")
     for _, f in ranking.iterrows():
         icono = folium.DivIcon(html=(
-            f'<div style="background:#bd0026;color:#fff;border:2px solid #fff;border-radius:50%;'
-            f'width:26px;height:26px;line-height:22px;text-align:center;font:bold 12px sans-serif;'
-            f'box-shadow:0 0 3px #000">{int(f["posicion"])}</div>'), icon_size=(26, 26), icon_anchor=(13, 13))
+            f'<div style="background:#1C1C1C;color:#fff;border:1px solid #fff;'
+            f'width:22px;height:22px;line-height:20px;text-align:center;font:600 11px sans-serif">'
+            f'{int(f["posicion"])}</div>'), icon_size=(22, 22), icon_anchor=(11, 11))
         folium.Marker((f["latitud"], f["longitud"]), icon=icono,
                       tooltip=f"#{int(f['posicion'])} · {_tooltip(f)}").add_to(capa)
     capa.add_to(m)
@@ -94,9 +96,9 @@ def capa_grupos(m: folium.Map, df: pd.DataFrame, grupos: pd.Series, perfil: pd.D
     for _, p in perfil.iterrows():
         color = PALETA_GRUPOS[(int(p["grupo"]) - 1) % len(PALETA_GRUPOS)]
         icono = folium.DivIcon(html=(
-            f'<div style="background:{color};color:#fff;border:3px solid #000;border-radius:4px;'
-            f'width:30px;height:30px;line-height:24px;text-align:center;font:bold 15px sans-serif;'
-            f'text-shadow:0 0 2px #000">{int(p["grupo"])}</div>'), icon_size=(30, 30), icon_anchor=(15, 15))
+            f'<div style="background:#FFFFFF;color:#1C1C1C;border:2px solid {color};'
+            f'width:26px;height:26px;line-height:22px;text-align:center;font:600 13px sans-serif">'
+            f'{int(p["grupo"])}</div>'), icon_size=(26, 26), icon_anchor=(13, 13))
         folium.Marker((p["latitud_centro"], p["longitud_centro"]), icon=icono,
                       tooltip=(f"<b>Centro del grupo {int(p['grupo'])}</b><br>{int(p['incidentes']):,} incidentes"
                                f" en {int(p['cruceros']):,} cruceros ({p['porcentaje']:.1f} %)")).add_to(m)

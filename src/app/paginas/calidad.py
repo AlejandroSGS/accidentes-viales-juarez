@@ -10,16 +10,16 @@ st.subheader("Fuente")
 st.markdown("""
 | | |
 |---|---|
-| **Archivo** | `data/raw/proyecto/ACCIDENTES_LIMPIOS.gpkg` (y su copia `ACCIDENTES_ML.csv`, verificada idéntica) |
-| **Origen** | Capa *Incidentes viales 2024* del IMIP Ciudad Juárez (sigimip.org.mx), usada en el documento del proyecto |
-| **Contenido** | Un registro por crucero con su número de incidentes en 2024 |
-| **Apoyo** | Límite municipal del IMIP (servicio ArcGIS `limitesyareasV2`), para validar ubicaciones |
-| **Actualización** | Sin actualización en tiempo real; corte anual 2024 |
+| Archivo | `data/raw/proyecto/ACCIDENTES_LIMPIOS.gpkg` (y su copia `ACCIDENTES_ML.csv`, verificada idéntica) |
+| Origen | Capa *Incidentes viales 2024* del IMIP Ciudad Juárez (sigimip.org.mx), usada en el documento del proyecto |
+| Contenido | Un registro por crucero con su número de incidentes en 2024 |
+| Apoyo | Límite municipal del IMIP (servicio ArcGIS `limitesyareasV2`), para validar ubicaciones |
+| Actualización | Sin actualización en tiempo real; corte anual 2024 |
 """)
 
 ej = comun.tabla("ejecuciones_pipeline").sort_values("id_ejecucion")
 ultima = ej.iloc[-1]
-st.markdown(f"Última carga: **{ultima['fin']:%Y-%m-%d %H:%M} UTC** (ejecución #{int(ultima['id_ejecucion'])}) · "
+st.markdown(f"Última carga: {ultima['fin']:%Y-%m-%d %H:%M} UTC (ejecución #{int(ultima['id_ejecucion'])}) · "
             f"SHA-256 del archivo: `{ultima['sha256_origen']}`")
 
 st.subheader("Resumen de calidad")
