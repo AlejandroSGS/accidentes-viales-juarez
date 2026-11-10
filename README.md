@@ -166,4 +166,3 @@ Ideas que no se implementaron:
 - Datos: **Instituto Municipal de Investigación y Planeación (IMIP), Ciudad Juárez**, sigimip.org.mx.
 - Mapa base: © colaboradores de OpenStreetMap.
 - Método de zonas: Anderson, T. K. (2009). Kernel density estimation and K-means clustering to profile road accident hotspots. *Accident Analysis & Prevention*, 41(3), 359–364.
-- Desarrollado con apoyo de Claude Code (Anthropic).
