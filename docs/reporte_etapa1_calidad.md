@@ -96,9 +96,13 @@ Por eso la app **no** podrá mostrar patrones por mes, día u hora, tipos de inc
 2. **Codificación:** corregir `¥` → `Ñ` (3 registros).
 3. **Texto:** mayúsculas, sin espacios sobrantes; nombre de crucero `calle_1 Y calle_2` con las calles en orden alfabético, para poder agrupar.
 4. **Coordenadas:** convertir UTM 13N → latitud/longitud (WGS84). Marcar `fuera_municipio` (2 registros); no se borran, pero no aparecen en el mapa.
-5. **Zona sin dato:** conservar `SIN_DATO` y marcar `zona_sin_dato` (11). Opcional: asignar la zona por cercanía a los cruceros vecinos, marcando que fue inferida.
+5. **Zona sin dato:** asignar la zona de los cruceros vecinos más cercanos y marcar `zona_inferida` (11). Se conserva el valor original `SIN_DATO` en la columna `zona_original`.
 6. **Crucero sin identificador** (`PUNTOS_ID = 99999`): marcar `sin_id_crucero` (1).
 7. **Calle 1 = Calle 2:** marcar `no_es_crucero` (64); se conservan, porque sí son ubicaciones con incidentes.
 8. **Coordenadas repetidas** entre cruceros distintos: marcar `coord_repetida` (2).
 9. **Sector con más de una zona:** marcar para revisión (1 sector).
 10. **Trazabilidad:** cada registro limpio conserva `OBJECTID` original, archivo de origen y hash; cada regla registra cuántos registros afectó en `bitacora_limpieza.md`.
+
+## E. Modelo de machine learning (decidido 2026-11-09)
+
+Se usará **densidad Kernel (KDE) + K-means ponderado por número de incidentes**, siguiendo a Anderson (2009), citado en el documento del proyecto. Es un modelo **no supervisado**: agrupa los cruceros en zonas y describe cada grupo; no predice ni determina causas.
