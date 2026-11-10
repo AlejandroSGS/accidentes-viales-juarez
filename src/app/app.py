@@ -19,6 +19,11 @@ st.set_page_config(page_title="Accidentes viales en Ciudad Juárez", layout="wid
 
 try:
     opciones = comun.opciones_filtros()
+except KeyError as error:
+    st.error("Falta configurar la conexión a la base de datos. En local, revisa el archivo `.env`; "
+             "en Streamlit Cloud, agrega `DATABASE_URL_UNPOOLED` en Settings → Secrets.")
+    st.caption(f"Variable faltante: {error}")
+    st.stop()
 except (OperationalError, ProgrammingError) as error:
     st.error("No se pudo leer la base de datos. Revisa que PostgreSQL esté encendido, que el archivo `.env` "
              "tenga los datos correctos y que hayas corrido `python -m src.db --reset` y "

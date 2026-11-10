@@ -14,8 +14,22 @@ AVISO_CAUSAS = ("Nota: estos resultados muestran dónde se concentran los regist
                 "No determinan las causas de los accidentes ni el riesgo de un lugar.")
 
 
+def _secretos_a_entorno() -> None:
+    """Copia los Secrets de Streamlit Cloud (p. ej. DATABASE_URL_UNPOOLED) a variables de entorno.
+
+    En local no hay secrets.toml y no pasa nada; nunca sobrescribe variables ya definidas.
+    """
+    try:
+        for clave, valor in st.secrets.items():
+            if isinstance(valor, str):
+                os.environ.setdefault(clave, valor)
+    except Exception:  # sin archivo de secrets (uso local)
+        pass
+
+
 @st.cache_resource
 def engine():
+    _secretos_a_entorno()
     # Las pruebas automáticas fijan ACCIDENTES_BD_PRUEBAS=1 para no tocar la base real
     return get_engine(test=os.environ.get("ACCIDENTES_BD_PRUEBAS") == "1")
 
