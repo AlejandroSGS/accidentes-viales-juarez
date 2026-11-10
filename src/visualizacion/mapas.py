@@ -18,6 +18,15 @@ def mapa_base(zoom: int = 11) -> folium.Map:
     return folium.Map(location=CENTRO_JUAREZ, zoom_start=zoom, tiles="OpenStreetMap", control_scale=True)
 
 
+def ajustar_vista(m: folium.Map, df: pd.DataFrame) -> folium.Map:
+    """Encuadra el mapa en los cruceros (percentiles 1–99, para que un punto aislado no aleje la vista)."""
+    if len(df):
+        lat = df["latitud"].quantile([0.01, 0.99]).to_numpy()
+        lon = df["longitud"].quantile([0.01, 0.99]).to_numpy()
+        m.fit_bounds([[lat[0], lon[0]], [lat[1], lon[1]]])
+    return m
+
+
 def _tooltip(fila: pd.Series, extra: str = "") -> str:
     sector = "sin dato" if pd.isna(fila["sector"]) else int(fila["sector"])
     return (f"<b>{html.escape(fila['nombre_crucero'])}</b><br>Incidentes 2024: {int(fila['incidentes']):,}"

@@ -38,6 +38,7 @@ if "Cruceros" in capas:
     mapas.capa_puntos(m, dentro)
 if "Cruceros con más incidentes" in capas:
     mapas.capa_ranking(m, de.ranking_cruceros(dentro, n_top))
+mapas.ajustar_vista(m, dentro)
 folium.LayerControl(collapsed=False).add_to(m)
 st_folium(m, height=620, use_container_width=True, returned_objects=[])
 

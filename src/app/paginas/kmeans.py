@@ -25,6 +25,7 @@ grupos, perfil = comun.grupos_kmeans(dentro, k)
 
 m = mapas.mapa_base()
 mapas.capa_grupos(m, dentro, grupos, perfil)
+mapas.ajustar_vista(m, dentro)
 folium.LayerControl(collapsed=True).add_to(m)
 st_folium(m, height=580, use_container_width=True, returned_objects=[])
 st.caption("Cada color es un grupo; el cuadro numerado marca el centro del grupo (promedio ponderado por "
