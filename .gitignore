@@ -17,3 +17,8 @@ data/raw/imip_arcgis/*
 
 # Documento del proyecto (contiene matrículas; no se publica)
 *.pdf
+
+# Conexiones alternativas (p. ej. la base en la nube): nunca se suben
+.env.*
+!.env.example
+!.env.nube.example

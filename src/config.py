@@ -22,7 +22,10 @@ SCHEMA = "accidentes"
 CRS_ORIGEN = 32613  # UTM zona 13N
 CRS_WGS84 = 4326
 
-load_dotenv(ROOT / ".env")
+# Por defecto se lee .env; con ACCIDENTES_ENV=.env.nube se usa la base en la nube.
+# En Streamlit Cloud no hay archivo: las variables PG* vienen de los "secrets" del servicio.
+# load_dotenv no sobrescribe variables que ya existan en el entorno.
+load_dotenv(ROOT / os.environ.get("ACCIDENTES_ENV", ".env"))
 
 
 def database_url(test: bool = False) -> URL:
@@ -40,4 +43,6 @@ def database_url(test: bool = False) -> URL:
 
 def get_engine(test: bool = False) -> Engine:
     """Devuelve un engine de SQLAlchemy para la base real o la de pruebas."""
-    return create_engine(database_url(test), future=True)
+    # pool_pre_ping: reconecta si la base (p. ej. Neon gratuito) cerró la conexión por inactividad.
+    # El cifrado SSL se pide con la variable estándar PGSSLMODE=require, que psycopg lee sola.
+    return create_engine(database_url(test), future=True, pool_pre_ping=True)
