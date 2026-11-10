@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from sqlalchemy import URL, Engine, create_engine
+from sqlalchemy import URL, Engine, create_engine, make_url
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_RAW = ROOT / "data" / "raw"
@@ -22,14 +22,22 @@ SCHEMA = "accidentes"
 CRS_ORIGEN = 32613  # UTM zona 13N
 CRS_WGS84 = 4326
 
-# Por defecto se lee .env; con ACCIDENTES_ENV=.env.nube se usa la base en la nube.
-# En Streamlit Cloud no hay archivo: las variables PG* vienen de los "secrets" del servicio.
+# Por defecto se lee .env; con ACCIDENTES_ENV=.env.local (la escribe la herramienta de Neon) se usa la base en la nube.
+# En Streamlit Cloud no hay archivo: DATABASE_URL (o las PG*) vienen de los "secrets" del servicio.
 # load_dotenv no sobrescribe variables que ya existan en el entorno.
 load_dotenv(ROOT / os.environ.get("ACCIDENTES_ENV", ".env"))
 
 
 def database_url(test: bool = False) -> URL:
-    """Arma la URL de conexión; con test=True usa la base de pruebas."""
+    """Arma la URL de conexión; con test=True usa la base de pruebas.
+
+    Si existe DATABASE_URL (formato de Neon y de muchos servicios en la nube) se usa esa
+    cadena; si no, se arma con las variables PG*. La base de pruebas siempre es la local.
+    """
+    if not test:
+        cadena = os.environ.get("DATABASE_URL_UNPOOLED") or os.environ.get("DATABASE_URL")
+        if cadena:
+            return make_url(cadena).set(drivername="postgresql+psycopg")
     db = os.environ["PGDATABASE_TEST"] if test else os.environ["PGDATABASE"]
     return URL.create(
         "postgresql+psycopg",
