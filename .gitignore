@@ -22,3 +22,5 @@ data/raw/imip_arcgis/*
 .env.*
 !.env.example
 !.env.nube.example
+.neon
+node_modules/
