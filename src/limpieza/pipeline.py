@@ -169,7 +169,8 @@ El registro limpio se enlaza con el original por `id_objeto` = `OBJECTID` (tabla
 """, encoding="utf-8")
 
 
-def ejecutar(engine: Engine | None) -> pd.DataFrame:
+def ejecutar(engine: Engine | None, escribir_archivos: bool = True) -> pd.DataFrame:
+    """Corre el pipeline completo. Con escribir_archivos=False (pruebas) no toca data/processed ni docs/."""
     inicio = datetime.now(timezone.utc)
     sha = sha256(RAW_GPKG)
     gdf = gpd.read_file(RAW_GPKG)
@@ -177,10 +178,11 @@ def ejecutar(engine: Engine | None) -> pd.DataFrame:
         raise ValueError(f"Se esperaba EPSG:{CRS_ORIGEN} en {RAW_GPKG.name}, llegó {gdf.crs}")
     csv = pd.read_csv(RAW_CSV, encoding="utf-8-sig")
     df, bitacora = limpiar(gdf, csv, leer_limite_municipal())
-    guardar_procesados(df)
     crudo = pd.DataFrame(gdf.drop(columns="geometry"))
     id_ej = cargar_db(engine, crudo, df, bitacora, inicio, sha) if engine is not None else None
-    escribir_bitacora_md(bitacora, df, sha, inicio, id_ej)
+    if escribir_archivos:
+        guardar_procesados(df)
+        escribir_bitacora_md(bitacora, df, sha, inicio, id_ej)
     return df
 
 

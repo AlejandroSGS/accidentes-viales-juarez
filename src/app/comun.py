@@ -1,6 +1,8 @@
 """Piezas compartidas por las páginas: conexión, caché, filtros y avisos."""
 from __future__ import annotations
 
+import os
+
 import pandas as pd
 import streamlit as st
 from sqlalchemy import text
@@ -14,7 +16,8 @@ AVISO_CAUSAS = ("**Aviso:** estos resultados muestran **dónde se concentran los
 
 @st.cache_resource
 def engine():
-    return get_engine()
+    # Las pruebas automáticas fijan ACCIDENTES_BD_PRUEBAS=1 para no tocar la base real
+    return get_engine(test=os.environ.get("ACCIDENTES_BD_PRUEBAS") == "1")
 
 
 @st.cache_data(ttl=600, show_spinner="Consultando la base de datos…")
