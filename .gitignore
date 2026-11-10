@@ -1,0 +1,16 @@
+# Entorno y secretos
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Datos intermedios (se regeneran con el pipeline)
+data/interim/
+
+# Datos del IMIP explorados en la Etapa 1 pero no usados por decisión del equipo
+data/raw/imip/
+data/raw/imip_arcgis/*
+!data/raw/imip_arcgis/limite_municipal/
+!data/raw/imip_arcgis/centro_de_poblacion/
+!data/raw/imip_arcgis/manifiesto.json

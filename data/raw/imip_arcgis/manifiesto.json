@@ -1,0 +1,150 @@
+[
+  {
+    "capa_id": 16,
+    "nombre": "incidentes viales 2023T",
+    "url": "https://sigimip.org.mx/server/rest/services/incidentesviales/FeatureServer/16",
+    "registros": 6116,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 2000,
+        "sha256": "d83657f73a7393804834ae7d6ba92a1da2d95da013edbf301fed33669c856ad0"
+      },
+      {
+        "archivo": "page_002000.json",
+        "registros": 2000,
+        "sha256": "0d59e7497fdbe501ee7ecbb3a9055e0643d0302d1a71d88cdf1bd988e2784053"
+      },
+      {
+        "archivo": "page_004000.json",
+        "registros": 2000,
+        "sha256": "0a4eb7ed0c3ffa86ce84e1846b18b8036c12f3ee6f30fbfa3d69fff3716ade96"
+      },
+      {
+        "archivo": "page_006000.json",
+        "registros": 116,
+        "sha256": "ccae6c96b32926ca6cbb87f9a5def671c1b2ee5c31a0b9271574d0bb1fbece14"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:40+00:00"
+  },
+  {
+    "capa_id": 18,
+    "nombre": "incidentes viales 2024T",
+    "url": "https://sigimip.org.mx/server/rest/services/incidentesviales/FeatureServer/18",
+    "registros": 6423,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 2000,
+        "sha256": "fe8c4dde13d944e6380c5872bcf081640de7d34d2f159606c927e481460614c9"
+      },
+      {
+        "archivo": "page_002000.json",
+        "registros": 2000,
+        "sha256": "3f8d1ab203ba5c39a37977c0f781a0267a50bb1bf0bf104aa867f504adb3c74b"
+      },
+      {
+        "archivo": "page_004000.json",
+        "registros": 2000,
+        "sha256": "6c757c354953345418b36f9e582ede7df4e596fdaf17d255d6facc074a9cb487"
+      },
+      {
+        "archivo": "page_006000.json",
+        "registros": 423,
+        "sha256": "0826f93238886680f4c6ed155e491e322618032042b7e942d3452067b410420d"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:43+00:00"
+  },
+  {
+    "capa_id": 20,
+    "nombre": "incidentes viales 2025T",
+    "url": "https://sigimip.org.mx/server/rest/services/incidentesviales/FeatureServer/20",
+    "registros": 6314,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 2000,
+        "sha256": "fb6ad5044a673e4ecae82d93e8afea1aaa1978dc283536e6af480c1baa36e706"
+      },
+      {
+        "archivo": "page_002000.json",
+        "registros": 2000,
+        "sha256": "f6bca9c6dc84ddc0fc8cb83901901acef50f57737296b2a0a38582d7a9e75649"
+      },
+      {
+        "archivo": "page_004000.json",
+        "registros": 2000,
+        "sha256": "4763e01ec606d183292955495a7099325730fdda50b24f569e7188caa4daac33"
+      },
+      {
+        "archivo": "page_006000.json",
+        "registros": 314,
+        "sha256": "8c57d27598aec35b831491c511fdeeedd41df0ab0147fc86b2567a5e98aa6174"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:46+00:00"
+  },
+  {
+    "capa_id": 19,
+    "nombre": "incidentes viales 2025",
+    "url": "https://sigimip.org.mx/server/rest/services/incidentesviales/FeatureServer/19",
+    "registros": 2964,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 2000,
+        "sha256": "e375563277c8fb9023448cbd0070b69c54fd38ae278b9ea999fde6131e64b04e"
+      },
+      {
+        "archivo": "page_002000.json",
+        "registros": 964,
+        "sha256": "4e1ebb6af34ff98ca5dfb793b0a6f2f197c35cdf4162ff9e454fd685b487506a"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:47+00:00"
+  },
+  {
+    "capa_id": 41,
+    "nombre": "Cruceros con mayor Incidentes Viales",
+    "url": "https://sigimip.org.mx/server/rest/services/incidentesviales/FeatureServer/41",
+    "registros": 29,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 29,
+        "sha256": "20c3833224c8f0dd3e79ce3d75756588df0cb46b48637383248455678e0ab128"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:47+00:00"
+  },
+  {
+    "capa_id": 15,
+    "nombre": "Limite Municipal",
+    "url": "https://sigimip.org.mx/server/rest/services/limitesyareasV2/FeatureServer/15",
+    "registros": 1,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 1,
+        "sha256": "439add34af0e7f7fdccfd86287fd7f0f41f4ad3ab53a4c19ef14f618bea02f87"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:48+00:00"
+  },
+  {
+    "capa_id": 14,
+    "nombre": "Centro de Poblacion",
+    "url": "https://sigimip.org.mx/server/rest/services/limitesyareasV2/FeatureServer/14",
+    "registros": 1,
+    "paginas": [
+      {
+        "archivo": "page_000000.json",
+        "registros": 1,
+        "sha256": "9ab218a0f6465d0fe2dc92a8486edbedc737a30b57163d95c9cda75700122ca4"
+      }
+    ],
+    "descargado_utc": "2026-11-10T05:28:48+00:00"
+  }
+]
