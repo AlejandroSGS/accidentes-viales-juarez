@@ -1,0 +1,18 @@
+# Probado con Python 3.14 en Windows 11
+# Datos y espacial
+pandas==3.1.1
+numpy==2.5.4
+geopandas==1.2.0
+pyogrio==0.13.0
+shapely==2.2.0
+pyproj==3.8.0
+scikit-learn==1.9.1
+scipy==1.18.1
+# Base de datos
+SQLAlchemy==2.1.8
+psycopg[binary]==3.3.8
+python-dotenv==1.2.4
+# Pruebas
+pytest==9.2.0
+# Solo para leer el PDF del proyecto en la exploración
+pypdf==7.0.0
