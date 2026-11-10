@@ -188,12 +188,13 @@ def ejecutar(engine: Engine | None, escribir_archivos: bool = True) -> pd.DataFr
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Limpia los datos y los carga en PostgreSQL")
-    parser.add_argument("--test", action="store_true", help="carga en la base de pruebas")
+    parser.add_argument("--test", action="store_true",
+                        help="carga en la base de pruebas (no toca data/processed ni la bitácora)")
     parser.add_argument("--sin-db", action="store_true", help="solo genera data/processed y la bitácora")
     args = parser.parse_args()
-    df = ejecutar(None if args.sin_db else get_engine(test=args.test))
-    print(f"Listo: {len(df):,} cruceros limpios, {int(df['incidentes'].sum()):,} incidentes. "
-          f"Bitácora en {BITACORA_MD.relative_to(ROOT).as_posix()}")
+    df = ejecutar(None if args.sin_db else get_engine(test=args.test), escribir_archivos=not args.test)
+    destino = "base de pruebas" if args.test else f"bitácora en {BITACORA_MD.relative_to(ROOT).as_posix()}"
+    print(f"Listo: {len(df):,} cruceros limpios, {int(df['incidentes'].sum()):,} incidentes ({destino}).")
 
 
 if __name__ == "__main__":

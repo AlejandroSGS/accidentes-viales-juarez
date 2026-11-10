@@ -2,6 +2,16 @@
 
 Todas las fechas de descarga están en UTC. Los archivos originales están en `data/raw/` y **no se modifican**.
 
+## Resumen: qué usa el sistema
+
+| Fuente | Uso | ¿En Git? |
+|---|---|---|
+| 0. Datos del proyecto (cruceros 2024) | **Fuente principal** de la app y el análisis | Sí, `data/raw/proyecto/` |
+| 2. IMIP ArcGIS: límite municipal y centro de población | **Apoyo:** validar que las ubicaciones caigan dentro del municipio | Sí, `data/raw/imip_arcgis/limite_municipal/` y `centro_de_poblacion/` |
+| 1. IMIP shapefiles 2008–2024 | Solo exploración (Etapa 1). Confirmó que el archivo del proyecto = `ACCI2024` | No (se vuelve a descargar con las URL de abajo) |
+| 2. IMIP ArcGIS: incidentes individuales 2023–2025 y cruceros 2025 | Solo exploración (Etapa 1). **No se usan** por decisión del equipo (2026-11-09) | No (se vuelven a descargar con `python -m src.ingesta.arcgis_imip`) |
+| 3. INEGI ATUS | No descargada | — |
+
 ## 0. Datos del proyecto (fuente principal)
 
 - **Origen:** archivos entregados por el equipo del proyecto; son los que se usaron en el documento del proyecto. Derivan de la capa **"Incidentes viales 2024"** del IMIP (`ACCI2024`, fuente 1).
