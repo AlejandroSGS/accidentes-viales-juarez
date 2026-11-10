@@ -87,7 +87,7 @@ accidentes-viales-juarez/
 ├── requirements.txt          # dependencias con versión fijada
 ├── pytest.ini
 ├── .env.example              # plantilla de conexión (el .env real no va a Git)
-├── accidentes viales cd juarez.pdf   # documento del proyecto
+├── *.pdf                     # documento del proyecto (solo local, no se publica)
 ├── data/
 │   ├── raw/                  # originales, nunca se editan
 │   │   ├── proyecto/         # ACCIDENTES_LIMPIOS.gpkg y ACCIDENTES_ML.csv (fuente principal)

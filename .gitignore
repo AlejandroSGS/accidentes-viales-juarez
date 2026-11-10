@@ -14,3 +14,6 @@ data/raw/imip_arcgis/*
 !data/raw/imip_arcgis/limite_municipal/
 !data/raw/imip_arcgis/centro_de_poblacion/
 !data/raw/imip_arcgis/manifiesto.json
+
+# Documento del proyecto (contiene matrículas; no se publica)
+*.pdf
